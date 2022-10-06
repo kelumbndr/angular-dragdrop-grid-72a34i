@@ -1,0 +1,38 @@
+<h1>Drag&Drop with a flex-wrap</h1>
+
+<button (click)="add()">Add</button> <button (click)="shuffle()">Shuffle</button
+><br />
+<ul class="example-list">
+  <ng-container *ngFor="let item of items">
+    <li>
+      {{ item }} {{emptyItems.includes(item)? 'Empty Slot' : ''}}
+    </li>
+  </ng-container>
+</ul>
+
+<div class="example-container" cdkDropListGroup>
+  <div
+    cdkDropList
+    [cdkDropListEnterPredicate]="dropListEnterPredicate"
+    (cdkDropListDropped)="dropListDropped($event)"
+  ></div>
+
+
+  <div
+    cdkDropList
+    *ngFor="let item of items"
+    [cdkDropListEnterPredicate]="dropListEnterPredicate"
+    (cdkDropListDropped)="dropListDropped($event)"
+  >
+    <!-- <div cdkDrag class="example-box" (cdkDragMoved)="dragMoved($event)">
+      {{ item }}
+    </div> -->
+    <div 
+      cdkDrag
+      class="example-box" 
+      [ngClass]="emptyItems.includes(item)? 'empty-slot' : ''"
+      (cdkDragMoved)="dragMoved($event)">
+    {{ item }}
+    </div>
+  </div>
+</div>
